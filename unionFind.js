@@ -4,16 +4,27 @@ export function unionFind(elements, getKey) {
 
     if (getKey === undefined) getKey = e => e;
 
-    const groups = Array(elements.length).fill(0).map((_, i) => {
-        return getKey(elements[i]);
+    const keyToIndex = {};
+    elements.forEach((e, i) => {
+        keyToIndex[getKey(e)] = i;
     });
 
-    function union(a, b) {
+    const groups = Array(elements.length).fill(0).map((_, i) => i);
 
+    function union(a, b) {
+        const ai = find(a);
+        const bi = find(b);
+        groups[bi] = ai;
     }
 
     function find(a) {
-
+        const ai = keyToIndex[getKey(a)];
+        let p = ai;
+        while (groups[p] !== p) {
+            p = groups[p];
+        }
+        groups[ai] = p;
+        return p;
     }
 
     return {
