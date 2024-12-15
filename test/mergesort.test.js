@@ -1,7 +1,7 @@
 import { not, run } from './tests.js';
 import { mergesort } from '../mergesort.js';
 
-export const tests = {
+const tests = {
 
     isSorted: () => {
         
@@ -16,9 +16,13 @@ export const tests = {
     
 };
 
-if (require.main === module) {
+export function main() {
     console.log("MergeSort:")
     for (const testName in tests) {
         run(tests[testName], testName);
     }
+}
+
+if (require.main === module) {
+    main();
 }

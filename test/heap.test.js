@@ -1,7 +1,7 @@
 import { not, run, ser } from './tests.js';
 import { heap } from '../heap.js';
 
-export const tests = {
+const tests = {
 
     isSorted: () => {        
         const h = heap([
@@ -20,7 +20,7 @@ export const tests = {
         }
 
         const e1 = [0, 6, 9];
-        if (not(c1.every((v, i) => v === e1[i]))) {
+        if (not(c1.every((v, i) => v.key === e1[i]))) {
             throw new Error(`Heap values not sorted on pop ${ser(c1)}`);
         }
 
@@ -57,7 +57,7 @@ export const tests = {
         }
 
         const e2 = [2, 6, 6];
-        if (not(c2.every((v, i) => v === e2[i]))) {
+        if (not(c2.every((v, i) => v.key === e2[i]))) {
             throw new Error("Heap values not sorted on second round of pop");
         }
 
@@ -68,9 +68,13 @@ export const tests = {
     
 };
 
-if (require.main === module) {
+export function main() {
     console.log("Heap:")
     for (const testName in tests) {
         run(tests[testName], testName);
     }
+}
+
+if (require.main === module) {
+    main();
 }

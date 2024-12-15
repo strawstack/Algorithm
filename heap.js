@@ -10,48 +10,55 @@ export function heap(initial, compare) {
         }
     }
 
-    function swap(a, b) {
-        const temp = data[a];
-        data[a] = data[b];
-        data[b] = temp;
+    function swap(ai, bi) {
+        const temp = data[ai];
+        data[ai] = data[bi];
+        data[bi] = temp;
     }
 
     function upheap(n) {
-        const p = Math.floor((n - 1) / 2);
-        const a = data[p];
-        const bi = 2 * p + 1;
-        const ci = 2 * p + 2;
-        const b = data[bi];
-        const c = data[ci];
-        if (bi >= data.length) return;
-        if (compare(b, a)) {
-            swap(p, bi);
-            downheap(bi);
-        }
+        if (n <= 0) return;
+        const d = data;
+        const pi = Math.floor((n - 1) / 2);
+        const bi = 2 * pi + 1;
+        const ci = 2 * pi + 2;
 
-        if (ci >= data.length) return;
-        if (compare(b, c)) {
-            swap(p, ci);
-            downheap(ci);
+        const left = (bi < data.length) ? d[bi] : Infinity;
+        const right = (ci < data.length) ? d[ci] : Infinity;
+        if (left === Infinity && right === Infinity) return;
+
+        if (right === Infinity || compare(left, right)) {
+            if (compare(left, d[pi])) {
+                swap(bi, pi);
+                upheap(pi);
+            }
+        } else { // right <= left
+            if (right !== Infinity && compare(right, d[pi])) {
+                swap(ci, pi);
+                upheap(pi);
+            }
         }
     }
 
-    function downheap(p) {
+    function downheap(pi) {
         const d = data;
-        const left = 2 * n + 1;
-        const right = 2 * n + 2;
-        const b = data[bi];
-        const c = data[ci];
-        if (bi >= data.length) return;
-        if (compare(b, a)) {
-            swap(n, bi);
-            downheap(bi);
-        }
+        const bi = 2 * pi + 1;
+        const ci = 2 * pi + 2;
 
-        if (ci >= data.length) return;
-        if (compare(data[n], c)) {
-            swap(n, ci);
-            downheap(ci);
+        const left = (bi < data.length) ? d[bi] : Infinity;
+        const right = (ci < data.length) ? d[ci] : Infinity;
+        if (left === Infinity && right === Infinity) return;
+
+        if (right === Infinity || compare(left, right)) {
+            if (compare(left, d[pi])) {
+                swap(bi, pi);
+                downheap(bi);
+            }
+        } else { // right <= left
+            if (right !== Infinity && compare(right, d[pi])) {
+                swap(ci, pi);
+                downheap(ci);
+            }
         }
     }
 

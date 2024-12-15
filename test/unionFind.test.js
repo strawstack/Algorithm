@@ -1,7 +1,7 @@
 import { run, not } from './tests.js';
 import { unionFind } from '../unionFind.js';
 
-export const tests = {
+const tests = {
 
     trackGroupsCorrectly: () => {
         
@@ -50,9 +50,13 @@ export const tests = {
     
 };
 
-if (require.main === module) {
-    console.log("unionFind:");
+export function main() {
+    console.log("UnionFind:");
     for (const testName in tests) {
         run(tests[testName], testName);
     }
+}
+
+if (require.main === module) {
+    main();
 }
